@@ -21,7 +21,7 @@ user@host:~$ python -m venv venv
 
 Run virtual environment (Windows)
 ```console
-user@host:~$ venv\Scripts\activate
+user@host:~$ venv/Scripts/activate
 ```
 
 Install required libraries
