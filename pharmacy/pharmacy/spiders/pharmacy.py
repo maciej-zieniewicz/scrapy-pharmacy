@@ -1,4 +1,6 @@
 import scrapy
+from pharmacy.items import PharmacyItem
+from scrapy.loader import ItemLoader
 
 
 class PharmacySpider(scrapy.Spider):
@@ -7,19 +9,16 @@ class PharmacySpider(scrapy.Spider):
 
     def parse(self, response):
         for products in response.css('li.product__list-item.product'):
-            yield {
-                'name': products.css('a.link--dark-orange').attrib['title'],
-                'price': products
-                .css('a.btn.btn--wide.product__price::text')
-                .get().replace('zł', '').replace('\n', '')
-                .strip(),
-                'link': products.css('a.link--dark-orange').attrib['href']
-            }
-        try:
-            next_page = 'https://www.doz.pl' + \
-                response.css(
-                    'a.pagination__site.pagination__site--next').attrib['href']
-            if next_page is not None:
-                yield response.follow(next_page, callback=self.parse)
-        except Exception:
-            print('End of pages')
+            item_loader = ItemLoader(item=PharmacyItem(), selector=products)
+
+            item_loader.add_css('name', 'a.link--dark-orange::attr(title)')
+            item_loader.add_css('price', 'a.btn.btn--wide.product__price')
+            item_loader.add_css('link', 'a.link--dark-orange::attr(href)')
+
+            yield item_loader.load_item()
+
+        next_page = response.css(
+            'a.pagination__site.pagination__site--next::attr(href)').get()
+
+        if next_page is not None:
+            yield response.follow(next_page, callback=self.parse)
