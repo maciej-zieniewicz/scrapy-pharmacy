@@ -10,7 +10,10 @@ from w3lib.html import remove_tags
 
 
 def remove_currency(value):
-    return value.replace('zł', '').replace('\n', '').strip()
+    if value is not []:
+        return value.replace('zł', '').replace('\n', '').strip()
+    else:
+        return "None"
 
 
 def add_base_address(value):
