@@ -12,7 +12,7 @@ class PharmacySpider(scrapy.Spider):
             item_loader = ItemLoader(item=PharmacyItem(), selector=products)
 
             item_loader.add_css('name', 'a.link--dark-orange::attr(title)')
-            item_loader.add_css('price', 'a.btn.btn--wide.product__price')
+            item_loader.add_css('price', 'a.btn.btn--wide')
             item_loader.add_css('link', 'a.link--dark-orange::attr(href)')
 
             yield item_loader.load_item()
