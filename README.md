@@ -29,8 +29,8 @@ Install required libraries
 user@host:~$ pip install -r requirements.txt
 ```
 
-Run crawler
+Run crawler (saved data into sqlite database)
 ```console
-user@host:~$ scrapy crawl pharmacy -O output.json
+user@host:~$ scrapy crawl pharmacy 
 ```
 
