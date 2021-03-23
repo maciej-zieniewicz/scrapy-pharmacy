@@ -20,19 +20,22 @@ class PharmacyPipeline:
         self.coursor = self.conn.cursor()
 
     def create_table(self):
-        self.coursor.execute("""drop table if exists pharmacy_tb""")
-        self.coursor.execute(""" create table pharmacy_tb(
-            name text,
-            price text,
-            link text
+        # self.coursor.execute("""drop table if exists pharmacy_tb""")
+        self.coursor.execute(""" create table if not exists pharmacy_tb(
+            item_id INTEGER PRIMARY KEY,
+            name TEXT,
+            price TEXT,
+            link TEXT,
+            time TEXT
         )
         """)
 
     def store_db(self, item):
-        self.coursor.execute("""insert into pharmacy_tb values (?,?,?)""", (
+        self.coursor.execute("""insert into pharmacy_tb values (NULL, ?,?,?,?)""", (
             item['name'][0],
             item['price'][::],
-            item['link'][::]
+            item['link'][::],
+            item['time'][0]
         ))
         self.conn.commit()
 

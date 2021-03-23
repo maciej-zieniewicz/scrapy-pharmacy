@@ -27,3 +27,4 @@ class PharmacyItem(scrapy.Item):
         remove_tags, remove_currency), output_processor=TakeFirst())
     link = scrapy.Field(input_processor=MapCompose(
         add_base_address), output_processor=TakeFirst())
+    time = scrapy.Field()
