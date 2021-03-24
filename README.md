@@ -29,8 +29,12 @@ Install required libraries
 user@host:~$ pip install -r requirements.txt
 ```
 
-Run crawler (saved data into sqlite database)
+Run crawler with scrapy (saves data into sqlite database)
 ```console
-user@host:~$ scrapy crawl pharmacy 
+user@host:~$ scrapy crawl pharmacy-doz 
 ```
 
+You can also run both spiders simultaneously with python
+```console
+user@host:~$ python run_scrapers.py 
+```
