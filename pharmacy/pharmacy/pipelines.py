@@ -11,9 +11,12 @@ import sqlite3
 
 class PharmacyPipeline:
 
-    def __init__(self):
+    def open_spider(self, spider):
         self.create_connection()
         self.create_table()
+
+    def close_spider(self, spider):
+        self.conn.close()
 
     def create_connection(self):
         self.conn = sqlite3.connect('pharmacy_items.db')
@@ -26,16 +29,18 @@ class PharmacyPipeline:
             name TEXT,
             price TEXT,
             link TEXT,
-            time TEXT
+            time TEXT, 
+            pharmacy TEXT
         )
         """)
 
     def store_db(self, item):
-        self.coursor.execute("""insert into pharmacy_tb values (NULL, ?,?,?,?)""", (
-            item['name'][0],
+        self.coursor.execute("""insert into pharmacy_tb values (NULL, ?,?,?,?,?)""", (
+            item['name'],
             item['price'][::],
             item['link'][::],
-            item['time'][0]
+            item['time'][0],
+            item['pharmacy'][0]
         ))
         self.conn.commit()
 
